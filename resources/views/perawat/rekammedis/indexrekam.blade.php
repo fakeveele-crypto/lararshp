@@ -20,6 +20,11 @@
         <div class="card">
             <div class="card-header">Tabel Data Rekam Medis</div>
             <div class="card-body">
+                <div class="mb-3 d-flex justify-content-end">
+                    <a href="{{ route('perawat.rekam-medis.create') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-lg"></i> Tambah Rekam Medis
+                    </a>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -49,12 +54,12 @@
                                     @endif
                                 </td>
                                 <td>{{ optional($rm->pet)->nama ?? 'N/A' }}</td>
-                                <td>{{ optional(optional($rm->pet)->pemilik)->user->nama ?? 'N/A' }}</td>
+                                <td>{{ optional(optional(optional($rm->pet)->pemilik)->user)->nama ?? 'N/A' }}</td>
                                 <td>
                                     @if(optional(optional($rm->dokter)->user)->nama)
-                                        {{ $rm->dokter->user->nama }}
-                                    @elseif(optional(optional($rm->reservasi)->dokter)->user->nama)
-                                        {{ $rm->reservasi->dokter->user->nama }}
+                                        {{ optional(optional($rm->dokter)->user)->nama }}
+                                    @elseif(optional(optional(optional($rm->reservasi)->dokter)->user)->nama)
+                                        {{ optional(optional(optional($rm->reservasi)->dokter)->user)->nama }}
                                     @else
                                         N/A
                                     @endif

@@ -32,24 +32,32 @@
                     <a class="nav-link nav-link-custom @if(request()->routeIs('visimisi')) active @endif" href="{{ route('visimisi') }}">Visi Misi &amp; Tujuan</a>
                 </div>
                 <div class="d-flex align-items-center ms-auto">
-                    {{-- Right-side: auth links --}}
+                    {{-- Right-side: auth links (mobile) --}}
                     @guest
                         @if (Route::has('login'))
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        @endif
-                        @if (Route::has('register'))
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link d-md-none" href="{{ route('login') }}">{{ __('Login') }}</a>
                         @endif
                     @else
-                        <span style="display:flex; align-items:center; gap:8px">
-                            <span style="font-weight:700;">{{ Auth::user()->name }}</span>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:inline">
-                                @csrf
-                                <button type="submit" class="btn btn-link">{{ __('Logout') }}</button>
-                            </form>
-                        </span>
+                        <form method="POST" action="{{ route('logout') }}" class="d-md-none m-0">
+                            @csrf
+                            <button type="submit" class="btn btn-link nav-link p-0">Logout</button>
+                        </form>
                     @endguest
                 </div>
+            </div>
+
+            {{-- Desktop auth controls (right-top) --}}
+            <div class="d-none d-md-flex align-items-center ms-auto">
+                @guest
+                    @if (Route::has('login'))
+                        <a href="{{ route('login') }}" class="btn btn-outline-primary btn-sm me-2">Login</a>
+                    @endif
+                @else
+                    <form method="POST" action="{{ route('logout') }}" class="m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                    </form>
+                @endguest
             </div>
         </div>
     </nav>

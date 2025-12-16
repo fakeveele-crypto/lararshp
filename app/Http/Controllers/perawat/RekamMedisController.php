@@ -31,6 +31,23 @@ class RekamMedisController extends Controller
         return view('perawat.rekammedis.editrekam', compact('item'));
     }
 
+    public function create()
+    {
+        // provide lists for selects
+        $temu = \App\Models\TemuDokter::with(['pet','dokter.user'])
+                    ->whereIn('status', ['Pending', 'Selesai'])
+                    ->orderBy('tanggal','asc')
+                    ->get();
+
+        // only pets that have a matching TemuDokter (Pending or Selesai)
+        $petIds = $temu->pluck('idpet')->unique()->filter()->values()->all();
+        $pets = \App\Models\Pet::with('pemilik.user')
+                    ->whereIn('idpet', $petIds)
+                    ->get();
+
+        return view('perawat.rekammedis.createrekam', compact('pets','temu'));
+    }
+
     public function update(Request $request, $id)
     {
         $item = RekamMedis::findOrFail($id);
@@ -51,5 +68,23 @@ class RekamMedisController extends Controller
         $item->delete();
 
         return redirect()->route('perawat.rekam-medis.index')->with('success', 'Rekam medis dihapus');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'idpet' => 'required|integer|exists:pet,idpet',
+            'idreservasi_dokter' => 'nullable|integer|exists:temu_dokter,idtemu_dokter',
+            'anamnesa' => 'nullable|string',
+            'temuan_klinis' => 'nullable|string',
+            'diagnosa' => 'nullable|string',
+        ]);
+
+        // set created_at if desired
+        $data['created_at'] = now();
+
+        RekamMedis::create($data);
+
+        return redirect()->route('perawat.rekam-medis.index')->with('success', 'Rekam medis berhasil ditambahkan.');
     }
 }
