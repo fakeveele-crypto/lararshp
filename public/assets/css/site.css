@@ -1,0 +1,160 @@
+/* * File: site.css 
+ * Lokasi: public/assets/css/
+ * CSS Kustom FINAL: Profesional & Berkelas (Mengoverride Bootstrap)
+ */
+
+/* --- Typography dan Global --- */
+h1, h2, h4 {
+    font-weight: 700 !important; /* Bold tapi tetap berkelas */
+}
+body {
+    background-color: #f8f9fa; /* Latar belakang sangat terang */
+}
+
+/* --- Navigation Styling --- */
+.nav-link-custom {
+    font-weight: 600;
+    color: #333 !important;
+    padding: 0 1rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.nav-link-custom:hover {
+    color: #007bff !important;
+}
+/* Efek Underline Kuning (Eyecatching) */
+.nav-link-custom::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background: #ffc107; 
+    bottom: -5px;
+    left: 50%;
+    transition: all 0.3s ease;
+}
+.nav-link-custom:hover::after,
+.nav-link-custom.active::after {
+    width: 70%;
+    left: 15%;
+}
+
+/* --- Hero Section Styling (Home) --- */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../images/penampakan.jpeg') no-repeat center center;
+    background-size: cover;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+.hero-section h1 {
+    font-size: 3rem; 
+    text-transform: uppercase; 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+}
+
+/* --- Quotes & Divider --- */
+.quote-card {
+    border-left: 5px solid #ffc107;
+    background-color: #fffde7;
+}
+hr.custom-divider {
+    opacity: 1;
+    height: 5px; 
+    width: 60px;
+    margin-bottom: 25px;
+    background-color: #ffc107;
+    border: none;
+}
+
+/* --- Service Blocks (Kartu Layanan) --- */
+.service-block {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 30px;
+    transition: all 0.3s ease-in-out;
+    min-height: 250px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Bayangan yang sangat lembut */
+}
+.service-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Bayangan yang lebih kuat saat hover */
+    background-color: #f7f9fc; 
+}
+.service-block .service-icon {
+    font-size: 3rem; 
+    margin-bottom: 15px;
+    display: block; 
+}
+.btn-detail-clean {
+    color: #007bff;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.btn-detail-clean:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+nav a.active {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.struktur-list {
+  margin-top: 1rem;
+  padding-left: 1.5rem;
+  list-style: emoji;
+}
+
+.struktur-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+/* --- Leader Card Styling (Struktur) --- */
+.leader-card {
+    border-left: 5px solid #007bff;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.leader-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- VMT Block Styling (Visi Misi Tujuan) --- */
+.vmt-block {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    min-height: 100%;
+}
+.vmt-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.vmt-block ul {
+    list-style: none;
+    padding-left: 0;
+}
+.vmt-block ul li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+    margin-bottom: 10px;
+}
+.vmt-block ul li::before {
+    content: "•"; /* Bullet point kustom */
+    color: #ffc107; /* Warna kuning */
+    font-weight: bold;
+    display: inline-block;
+    width: 1.5em;
+    margin-left: -1.5em;
+}
