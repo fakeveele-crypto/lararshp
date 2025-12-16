@@ -11,7 +11,14 @@ class RekamMedisController extends Controller
 {
     public function index()
     {
-        $dokterId = 1; 
+        // determine dokter id from authenticated user if possible
+        $dokterId = 1;
+        if(\Illuminate\Support\Facades\Auth::check()){
+            $user = \Illuminate\Support\Facades\Auth::user();
+            if(method_exists($user, 'dokter') && $user->dokter){
+                $dokterId = $user->dokter->id_dokter ?? $dokterId;
+            }
+        }
 
         $rekamMedis = RekamMedis::with([
             'pet.pemilik.user', // Hewan -> Pemilik -> User
@@ -19,7 +26,8 @@ class RekamMedisController extends Controller
         ])
         ->whereHas('reservasi', function ($query) use ($dokterId) {
 
-            $query->where('iddokter', $dokterId); 
+            // TemuDokter table uses column name `id_dokter` (with underscore)
+            $query->where('id_dokter', $dokterId);
         })
         ->orderBy('created_at', 'desc')
         ->get();

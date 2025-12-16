@@ -67,6 +67,8 @@ Route::middleware(['isResepsionis'])->prefix('resepsionis')->name('resepsionis.'
     Route::resource('pemilik', App\Http\Controllers\resepsionis\PemilikController::class)->names('datapemilik');
     Route::resource('pet', App\Http\Controllers\resepsionis\PetController::class)->names('datapet');
     Route::resource('temudokter', App\Http\Controllers\resepsionis\TemuDokterController::class)->names('temu-dokter');
+    // Rekam Medis access for resepsionis (lihat menu Dokter)
+    Route::resource('/rekam-medis', App\Http\Controllers\resepsionis\RekamMedisController::class)->names('rekam-medis');
 });
 
 
@@ -77,6 +79,10 @@ Route::middleware(['isDokter'])->prefix('dokter')->name('dokter.')->group(functi
     Route::get('/dashboard', [Dokter\DashboardDokterController::class, 'index'])->name('dashboard');
     
     Route::resource('/rekam-medis', Dokter\RekamMedisController::class)->names('rekam-medis');
+
+    // Profile routes for Dokter
+    Route::get('/profile/edit', [Dokter\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [Dokter\ProfileController::class, 'update'])->name('profile.update');
 });
 
 

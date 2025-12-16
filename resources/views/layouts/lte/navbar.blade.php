@@ -71,6 +71,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('resepsionis.temu-dokter.index') }}">Temu Dokter</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('resepsionis.rekam-medis.index') }}">Rekam Medis</a>
+        </li>
       @elseif(session('user_role') == 5)
         <!-- Pemilik Menu -->
         <li class="nav-item">
