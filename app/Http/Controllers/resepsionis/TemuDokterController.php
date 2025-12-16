@@ -43,4 +43,21 @@ class TemuDokterController extends Controller
 
         return redirect()->route('resepsionis.temu-dokter.index')->with('success', 'Janji temu berhasil dijadwalkan.');
     }
+
+    public function edit($id)
+    {
+        $temu = TemuDokter::with(['pet.pemilik.user', 'dokter.user'])->findOrFail($id);
+        return view('resepsionis.temudokter.edit', compact('temu'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $temu = TemuDokter::findOrFail($id);
+        $data = $request->validate([
+            'status' => 'required|in:Menunggu,Diproses,Selesai',
+            'keluhan' => 'nullable|string|max:2000',
+        ]);
+        $temu->update($data);
+        return redirect()->route('resepsionis.temu-dokter.index')->with('success', 'Data janji temu diperbarui.');
+    }
 }

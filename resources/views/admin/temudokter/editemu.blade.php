@@ -12,10 +12,10 @@
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control" required>
                             <option value="" {{ old('status', $item->status) == '' ? 'selected' : '' }}>-</option>
-                            <option value="pending" {{ old('status', $item->status) == 'pending' ? 'selected' : '' }}>pending</option>
-                            <option value="confirmed" {{ old('status', $item->status) == 'confirmed' ? 'selected' : '' }}>confirmed</option>
-                            <option value="completed" {{ old('status', $item->status) == 'completed' ? 'selected' : '' }}>completed</option>
-                            <option value="cancelled" {{ old('status', $item->status) == 'cancelled' ? 'selected' : '' }}>cancelled</option>
+                            <option value="Menunggu" {{ old('status', $item->status) == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
+                            <option value="Diproses" {{ old('status', $item->status) == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                            <option value="Selesai" {{ old('status', $item->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="Dibatalkan" {{ old('status', $item->status) == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
                         </select>
                     </div>
                     <button class="btn btn-primary">Perbarui</button>
