@@ -33,7 +33,7 @@ class TemuDokterController extends Controller
             'tanggal' => 'nullable|date',
             'waktu' => 'nullable|string',
             'keluhan' => 'nullable|string',
-            'status' => 'nullable|string',
+            'status' => 'nullable|in:Pending,Selesai,Dibatalkan',
         ]);
         // map posted legacy 'iddokter' to DB column 'id_dokter' if present
         if (isset($data['iddokter']) && !isset($data['id_dokter'])) {
@@ -63,7 +63,7 @@ class TemuDokterController extends Controller
             'tanggal'=>'nullable|date',
             'waktu'=>'nullable|string',
             'keluhan'=>'nullable|string',
-            'status'=>'nullable|string'
+            'status'=>'nullable|in:Pending,Selesai,Dibatalkan'
         ]);
         if (isset($data['iddokter']) && !isset($data['id_dokter'])) {
             $data['id_dokter'] = $data['iddokter'];

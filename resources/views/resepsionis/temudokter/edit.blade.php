@@ -27,10 +27,9 @@
                         <label class="form-label">Status</label>
                         <select name="status" class="form-control">
                             <option value="" {{ old('status', $temu->status) === null || old('status', $temu->status)=='' ? 'selected' : '' }}>-</option>
-                            <option value="Menunggu" {{ old('status', $temu->status) == 'Menunggu' ? 'selected' : '' }}>Menunggu</option>
-                            <option value="Diproses" {{ old('status', $temu->status) == 'Diproses' ? 'selected' : '' }}>Diproses</option>
-                            <option value="Selesai" {{ old('status', $temu->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
-                            <option value="Dibatalkan" {{ old('status', $temu->status) == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                                <option value="Pending" {{ old('status', $temu->status) == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="Selesai" {{ old('status', $temu->status) == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                <option value="Dibatalkan" {{ old('status', $temu->status) == 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
                         </select>
                     </div>
 

@@ -55,9 +55,9 @@
                                 <td>
                                     @php
                                         $statusClass = match($temu->status) {
-                                            'Menunggu' => 'bg-warning',
-                                            'Diproses' => 'bg-info',
+                                            'Pending' => 'bg-warning',
                                             'Selesai' => 'bg-success',
+                                            'Dibatalkan' => 'bg-danger',
                                             default => 'bg-secondary',
                                         };
                                     @endphp

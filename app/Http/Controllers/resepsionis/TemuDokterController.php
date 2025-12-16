@@ -37,7 +37,7 @@ class TemuDokterController extends Controller
         ]);
 
         // default status when scheduling
-        $data['status'] = $request->input('status', 'Menunggu');
+        $data['status'] = $request->input('status', 'Pending');
 
         TemuDokter::create($data);
 
@@ -54,7 +54,7 @@ class TemuDokterController extends Controller
     {
         $temu = TemuDokter::findOrFail($id);
         $data = $request->validate([
-            'status' => 'required|in:Menunggu,Diproses,Selesai',
+            'status' => 'required|in:Pending,Selesai,Dibatalkan',
             'keluhan' => 'nullable|string|max:2000',
         ]);
         $temu->update($data);

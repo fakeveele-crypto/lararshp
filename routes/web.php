@@ -86,8 +86,10 @@ Route::middleware(['isPerawat'])->prefix('perawat')->name('perawat.')->group(fun
     // DASHBOARD ROUTE (Wajib ada)
     Route::get('/dashboard', [Perawat\DashboardPerawatController::class, 'index'])->name('dashboard');
     
-    Route::get('/rekam-medis', [Perawat\RekamMedisController::class, 'index'])->name('rekam-medis.index');
-    Route::get('/rekam-medis/{idrekam_medis}', [Perawat\RekamMedisController::class, 'show'])->name('rekam-medis.show');
+    Route::resource('/rekam-medis', Perawat\RekamMedisController::class)->names('rekam-medis');
+    // Profile routes for Perawat
+    Route::get('/profile/edit', [Perawat\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [Perawat\ProfileController::class, 'update'])->name('profile.update');
 });
 
 

@@ -10,19 +10,46 @@ class RekamMedisController extends Controller
 {
     public function index()
     {
-        $rekamMedis = RekamMedis::with('pet', 'dokter')
-                                ->orderBy('tanggal_periksa', 'desc')
-                                ->limit(50) 
-                                ->get();
-        
-        return view('perawat.rekam-medis.index', compact('rekamMedis'));
+        $rekamMedis = RekamMedis::with(['pet.pemilik.user', 'dokter.user', 'details.kodeTindakanTerapi', 'reservasi'])
+                        ->orderBy('created_at', 'desc')
+                        ->get();
+
+        return view('perawat.rekammedis.indexrekam', compact('rekamMedis'));
     }
-    
-    public function show($idrekam_medis)
+
+    public function show($id)
     {
-        $rekamMedis = RekamMedis::with('pet', 'dokter')
-                                ->findOrFail($idrekam_medis);
-        
-        return view('perawat.rekam-medis.show', compact('rekamMedis'));
+        $item = RekamMedis::with(['pet.pemilik.user', 'dokter.user', 'details.kodeTindakanTerapi', 'reservasi'])
+                    ->findOrFail($id);
+
+        return view('perawat.rekammedis.showrekam', compact('item'));
+    }
+
+    public function edit($id)
+    {
+        $item = RekamMedis::findOrFail($id);
+        return view('perawat.rekammedis.editrekam', compact('item'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $item = RekamMedis::findOrFail($id);
+        $data = $request->validate([
+            'anamnesa' => 'nullable|string',
+            'temuan_klinis' => 'nullable|string',
+            'diagnosa' => 'nullable|string',
+        ]);
+
+        $item->update($data);
+
+        return redirect()->route('perawat.rekam-medis.index')->with('success', 'Rekam medis diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $item = RekamMedis::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('perawat.rekam-medis.index')->with('success', 'Rekam medis dihapus');
     }
 }
