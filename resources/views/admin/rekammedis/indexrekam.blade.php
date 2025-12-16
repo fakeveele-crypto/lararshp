@@ -42,16 +42,32 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $rm->idrekam_medis }}</td>
-                                <td>{{ \Carbon\Carbon::parse($rm->tanggal_periksa)->format('d/m/Y') }}</td>
-                                <td>{{ $rm->pet->nama_pet ?? 'N/A' }}</td>
-                                <td>{{ $rm->pet->pemilik->user->nama ?? 'N/A' }}</td>
-                                <td>{{ $rm->dokter->user->nama ?? 'N/A' }}</td>
+                                <td>
+                                    @if(optional($rm->reservasi)->tanggal)
+                                        {{ \Carbon\Carbon::parse($rm->reservasi->tanggal)->format('d/m/Y') }}
+                                    @elseif($rm->created_at)
+                                        {{ \Carbon\Carbon::parse($rm->created_at)->format('d/m/Y') }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ optional($rm->pet)->nama ?? 'N/A' }}</td>
+                                <td>{{ optional(optional($rm->pet)->pemilik)->user->nama ?? 'N/A' }}</td>
+                                <td>
+                                    @if(optional(optional($rm->dokter)->user)->nama)
+                                        {{ $rm->dokter->user->nama }}
+                                    @elseif(optional(optional($rm->reservasi)->dokter)->user->nama)
+                                        {{ $rm->reservasi->dokter->user->nama }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                                 <td>{{ Str::limit($rm->diagnosa, 40) }}</td>
                                 <td>
-                                    <a href="#" class="btn btn-info text-white btn-sm btn-aksi me-1" title="Lihat Detail">
+                                    <a href="{{route('admin.rekam-medis.show', $rm->idrekam_medis)}}" class="btn btn-info text-white btn-sm btn-aksi me-1" title="Lihat Detail">
                                         <i class="bi bi-eye"></i> Lihat
                                     </a>
-                                    <form action="#" method="POST" class="d-inline">
+                                    <form action="{{ route('admin.rekam-medis.destroy', $rm->idrekam_medis) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm btn-aksi" title="Hapus RM" onclick="return confirm('Yakin ingin menghapus Rekam Medis ini?')">Hapus</button>

@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Pet; // Wajib diimpor jika tidak berada di namespace yang sama
 use App\Models\Dokter; // Wajib diimpor
-use App\Models\ReservasiDokter; // <--- TAMBAHKAN INI
+use App\Models\TemuDokter;
+use App\Models\DetailRekamMedis;
 
 class RekamMedis extends Model
 {
@@ -21,16 +22,26 @@ class RekamMedis extends Model
 
     public function dokter()
     {
-        return $this->belongsTo(Dokter::class, 'iddokter', 'iddokter');
+        // RekamMedis stores foreign key as `iddokter`, Dokter primary key is `id_dokter`
+        return $this->belongsTo(Dokter::class, 'iddokter', 'id_dokter');
     }
 
     public function reservasi()
     {
-    return $this->belongsTo(ReservasiDokter::class, 'idreservasi_dokter', 'idreservasi_dokter');
+        // Link to TemuDokter (appointment) — RekamMedis.idreservasi_dokter -> temu_dokter.idtemu_dokter
+        return $this->belongsTo(TemuDokter::class, 'idreservasi_dokter', 'idtemu_dokter');
     }
 
     public function details()
     {
         return $this->hasMany(DetailRekamMedis::class, 'idrekam_medis', 'idrekam_medis');
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($rekam) {
+            // delete related detail_rekam_medis rows to avoid FK constraint error
+            $rekam->details()->delete();
+        });
     }
 }

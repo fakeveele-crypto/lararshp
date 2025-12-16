@@ -41,10 +41,26 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $rm->idrekam_medis }}</td>
-                                <td>{{ optional($rm->created_at)->format('d/m/Y') ?? '' }}</td>
-                                <td>{{ $rm->pet->nama ?? 'N/A' }}</td>
-                                <td>{{ $rm->pet->pemilik->user->nama ?? 'N/A' }}</td>
-                                <td>{{ $rm->dokter->user->nama ?? 'N/A' }}</td>
+                                <td>
+                                    @if(optional($rm->reservasi)->tanggal)
+                                        {{ \Carbon\Carbon::parse($rm->reservasi->tanggal)->format('d/m/Y') }}
+                                    @elseif($rm->created_at)
+                                        {{ \Carbon\Carbon::parse($rm->created_at)->format('d/m/Y') }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>{{ optional($rm->pet)->nama ?? 'N/A' }}</td>
+                                <td>{{ optional(optional($rm->pet)->pemilik)->user->nama ?? 'N/A' }}</td>
+                                <td>
+                                    @if(optional(optional($rm->dokter)->user)->nama)
+                                        {{ $rm->dokter->user->nama }}
+                                    @elseif(optional(optional($rm->reservasi)->dokter)->user->nama)
+                                        {{ $rm->reservasi->dokter->user->nama }}
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                                 <td>{{ \Illuminate\Support\Str::limit($rm->diagnosa, 40) }}</td>
                                 <td>
                                     <a href="{{ route('admin.detail-rekam-medis.create', ['idrekam' => $rm->idrekam_medis]) }}" class="btn btn-success btn-sm btn-aksi me-1">Tambah Tindakan</a>
