@@ -62,17 +62,11 @@ Route::middleware(['isAdministrator'])->prefix('admin')->name('admin.')->group(f
 Route::middleware(['isResepsionis'])->prefix('resepsionis')->name('resepsionis.')->group(function () {
     // DASHBOARD ROUTE (Wajib ada)
     Route::get('/dashboard', [Resepsionis\DashboardResepsionisController::class, 'index'])->name('dashboard');
-    
-    // Registrasi Pemilik (Untuk Membuat User dan Pemilik Baru)
-    Route::get('/registrasi/pemilik', [Resepsionis\RegistrasiPemilikController::class, 'index'])->name('registrasi-pemilik.index');
-    Route::post('/registrasi/pemilik', [Resepsionis\RegistrasiPemilikController::class, 'store'])->name('registrasi-pemilik.store');
-    
-    // Registrasi Pet
-    Route::get('/registrasi/pet', [Resepsionis\RegistrasiPetController::class, 'index'])->name('registrasi-pet.index');
-    Route::post('/registrasi/pet', [Resepsionis\RegistrasiPetController::class, 'store'])->name('registrasi-pet.store');
-    
-    // Janji Temu (Temu Dokter) using Resource
-    Route::resource('/janji-temu', Resepsionis\TemuDokterController::class)->names('temu-dokter');
+
+    // Pemilik, pet and temu dokter resources for resepsionis
+    Route::resource('pemilik', App\Http\Controllers\resepsionis\PemilikController::class)->names('datapemilik');
+    Route::resource('pet', App\Http\Controllers\resepsionis\PetController::class)->names('datapet');
+    Route::resource('temudokter', App\Http\Controllers\resepsionis\TemuDokterController::class)->names('temu-dokter');
 });
 
 

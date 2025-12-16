@@ -48,8 +48,8 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $temu->idtemu_dokter }}</td>
-                                <td>{{ \Carbon\Carbon::parse($temu->tanggal_janji)->format('d/m/Y') }} Pukul {{ $temu->waktu_janji }}</td>
-                                <td>{{ $temu->pet->nama_pet ?? 'N/A' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($temu->tanggal)->format('d/m/Y') }} Pukul {{ $temu->waktu }}</td>
+                                <td>{{ $temu->pet->nama ?? 'N/A' }}</td>
                                 <td>{{ $temu->pet->pemilik->user->nama ?? 'N/A' }}</td>
                                 <td>{{ $temu->dokter->user->nama ?? 'N/A' }}</td>
                                 <td>
