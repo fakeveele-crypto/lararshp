@@ -9,7 +9,8 @@ class TemuDokter extends Model
     protected $table = 'temu_dokter';
     protected $primaryKey = 'idtemu_dokter';
     // Only DB columns should be fillable; keep accessor for backwards compatibility
-    protected $fillable = ['idpet', 'id_dokter', 'tanggal', 'waktu', 'keluhan', 'status'];
+    // Accept both legacy `iddokter` and DB column `id_dokter` for compatibility
+    protected $fillable = ['idpet', 'id_dokter', 'iddokter', 'tanggal', 'waktu', 'keluhan', 'status'];
     public $timestamps = false;
 
     public function pet()
@@ -19,7 +20,7 @@ class TemuDokter extends Model
 
     public function dokter()
     {
-        return $this->belongsTo(Dokter::class, 'id_dokter', 'id_dokter');
+        return $this->belongsTo(Dokter::class, 'iddokter', 'id_dokter');
     }
 
     // Backwards-compatible accessor for controllers/views expecting ->iddokter

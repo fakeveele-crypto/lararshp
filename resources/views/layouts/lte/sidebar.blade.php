@@ -212,12 +212,7 @@
             <p>Temu Dokter</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ route('resepsionis.rekam-medis.index') }}" class="nav-link {{ request()->routeIs('resepsionis.rekam-medis.*') ? 'active' : '' }}">
-            <i class="nav-icon bi bi-file-medical"></i>
-            <p>Rekam Medis</p>
-          </a>
-        </li>
+        <!-- Rekam Medis removed for Resepsionis -->
         @endif
 
         @if($role == 5)

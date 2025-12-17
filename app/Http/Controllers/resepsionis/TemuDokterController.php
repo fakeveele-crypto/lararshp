@@ -39,6 +39,7 @@ class TemuDokterController extends Controller
         // default status when scheduling
         $data['status'] = $request->input('status', 'Pending');
 
+        // Keep `id_dokter` as-is (DB uses `id_dokter`); model accepts both keys.
         TemuDokter::create($data);
 
         return redirect()->route('resepsionis.temu-dokter.index')->with('success', 'Janji temu berhasil dijadwalkan.');
