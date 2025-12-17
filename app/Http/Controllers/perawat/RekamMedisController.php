@@ -49,13 +49,13 @@ class RekamMedisController extends Controller
 
     public function create()
     {
-        // provide lists for selects
+        // provide lists for selects — only reservations with status 'Pending'
         $temu = \App\Models\TemuDokter::with(['pet','dokter.user'])
-                    ->whereIn('status', ['Pending', 'Selesai'])
+                    ->where('status', 'Pending')
                     ->orderBy('tanggal','asc')
                     ->get();
 
-        // only pets that have a matching TemuDokter (Pending or Selesai)
+        // only pets that have a matching TemuDokter (Pending)
         $petIds = $temu->pluck('idpet')->unique()->filter()->values()->all();
         $pets = \App\Models\Pet::with('pemilik.user')
                     ->whereIn('idpet', $petIds)

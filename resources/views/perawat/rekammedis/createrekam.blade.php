@@ -19,7 +19,7 @@
                     <div class="row g-3">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label class="form-label">Pet (Reservasi Pending / Selesai)</label>
+                                <label class="form-label">Pet (Reservasi Pending)</label>
                                 <select name="idpet" class="form-select" required>
                                     <option value="">- Pilih Pet -</option>
                                     @foreach($pets as $p)
