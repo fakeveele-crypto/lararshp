@@ -1,14 +1,13 @@
 <?php
-
-namespace App\Http\Controllers\dokter;
+namespace App\Http\Controllers\Dokter;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class DashboardDokterController extends Controller
 {
     public function index()
     {
-        return view('dokter.dashboard-dokter'); 
+        // Render the dokter dashboard view. Use the view name that exists in resources/views/dokter/
+        return view('dokter.dashboarddokter');
     }
 }
