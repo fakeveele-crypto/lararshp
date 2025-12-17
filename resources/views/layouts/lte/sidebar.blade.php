@@ -229,6 +229,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{{ route('pemilik.temu-dokter.index') }}" class="nav-link {{ request()->routeIs('pemilik.temu-dokter.*') ? 'active' : '' }}">
+            <i class="nav-icon bi bi-calendar-check"></i>
+            <p>Temu Dokter</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{ route('pemilik.rekam-medis.index') }}" class="nav-link {{ request()->routeIs('pemilik.rekam-medis.*') ? 'active' : '' }}">
             <i class="nav-icon bi bi-file-medical"></i>
             <p>Rekam Medis</p>

@@ -112,6 +112,11 @@ Route::middleware(['isPerawat'])->prefix('perawat')->name('perawat.')->group(fun
 Route::middleware(['isPemilik'])->prefix('pemilik')->name('pemilik.')->group(function () {
     // DASHBOARD ROUTE (Wajib ada)
     Route::get('/dashboard', [PemilikRole\DashboardPemilikController::class, 'index'])->name('dashboard');
-
-    Route::resource('/rekam-medis', PemilikRole\RekamMedisController::class)->names('rekam-medis');
+    // Read-only resources for pemilik: only index and show
+    Route::resource('/pet', PemilikRole\PetController::class)->only(['index','show'])->names('pet');
+    Route::resource('/temu-dokter', PemilikRole\TemuDokterController::class)->only(['index','show'])->names('temu-dokter');
+    Route::resource('/rekam-medis', PemilikRole\RekamMedisController::class)->only(['index','show'])->names('rekam-medis');
+    // Profile routes for Pemilik
+    Route::get('/profile/edit', [PemilikRole\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [PemilikRole\ProfileController::class, 'update'])->name('profile.update');
 });

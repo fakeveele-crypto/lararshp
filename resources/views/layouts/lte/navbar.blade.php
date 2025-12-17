@@ -80,6 +80,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('pemilik.pet.index') }}">My Pets</a>
         </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="bi bi-calendar-check"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <a href="{{ route('pemilik.temu-dokter.index') }}" class="dropdown-item">Temu Dokter</a>
+            </div>
+          </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ route('pemilik.rekam-medis.index') }}">Rekam Medis</a>
         </li>
