@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RekamMedis;
 use App\Models\TemuDokter;
+use Illuminate\Support\Facades\Schema;
 
 class RekamMedisController extends Controller
 {
@@ -47,6 +48,13 @@ class RekamMedisController extends Controller
         if (isset($data['idtemu_dokter'])) {
             unset($data['idtemu_dokter']);
         }
+
+        // Some environments/databases may not have the `idreservasi_dokter` column.
+        // Guard the insert by removing the key if the column doesn't exist to avoid SQL errors.
+        if (isset($data['idreservasi_dokter']) && !Schema::hasColumn('rekam_medis', 'idreservasi_dokter')) {
+            unset($data['idreservasi_dokter']);
+        }
+
         RekamMedis::create($data);
         return redirect()->route('admin.rekam-medis.index')->with('success','Rekam medis disimpan');
     }
