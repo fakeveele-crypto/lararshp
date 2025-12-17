@@ -22,9 +22,25 @@
 
                 <h5>Detail Tindakan</h5>
                 <ul>
-                    @foreach($item->details ?? [] as $d)
-                        <li>{{ optional($d->kodeTindakanTerapi)->nama_kode ?? ($d->keterangan ?? '-') }}</li>
-                    @endforeach
+                    @forelse($item->details ?? [] as $d)
+                        <li>
+                            @php
+                                $kode = optional($d->kodeTindakanTerapi)->kode;
+                                $deskripsi = optional($d->kodeTindakanTerapi)->deskripsi_tindakan_terapi;
+                                $detailText = $d->detail ?? null;
+                            @endphp
+                            @if($kode)
+                                <strong>{{ $kode }}</strong>@if($deskripsi) - {{ $deskripsi }}@endif
+                                @if($detailText)
+                                    <div class="small text-muted">Catatan: {{ $detailText }}</div>
+                                @endif
+                            @else
+                                {{ $detailText ?? '-' }}
+                            @endif
+                        </li>
+                    @empty
+                        <li class="text-muted">Tidak ada tindakan tercatat.</li>
+                    @endforelse
                 </ul>
 
                 <a href="{{ route('perawat.rekam-medis.index') }}" class="btn btn-secondary">Kembali</a>

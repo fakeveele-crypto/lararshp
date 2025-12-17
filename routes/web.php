@@ -83,6 +83,14 @@ Route::middleware(['isDokter'])->prefix('dokter')->name('dokter.')->group(functi
     // Profile routes for Dokter
     Route::get('/profile/edit', [Dokter\ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [Dokter\ProfileController::class, 'update'])->name('profile.update');
+
+    // Detail Rekam Medis routes for Dokter (add/edit/delete + complete)
+    Route::get('/detail-rekam-medis/create/{idrekam}', [Dokter\DetailRekamMedisController::class, 'create'])->name('detail-rekam-medis.create');
+    Route::post('/detail-rekam-medis', [Dokter\DetailRekamMedisController::class, 'store'])->name('detail-rekam-medis.store');
+    Route::get('/detail-rekam-medis/{iddetail}/edit', [Dokter\DetailRekamMedisController::class, 'edit'])->name('detail-rekam-medis.edit');
+    Route::put('/detail-rekam-medis/{iddetail}', [Dokter\DetailRekamMedisController::class, 'update'])->name('detail-rekam-medis.update');
+    Route::delete('/detail-rekam-medis/{iddetail}', [Dokter\DetailRekamMedisController::class, 'destroy'])->name('detail-rekam-medis.destroy');
+    Route::post('/rekam-medis/{idrekam}/complete', [Dokter\DetailRekamMedisController::class, 'complete'])->name('rekam-medis.complete');
 });
 
 

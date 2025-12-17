@@ -5,14 +5,30 @@ namespace App\Http\Controllers\Perawat;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RekamMedis;
+use Illuminate\Support\Facades\Schema;
 
 class RekamMedisController extends Controller
 {
     public function index()
     {
-        $rekamMedis = RekamMedis::with(['pet.pemilik.user', 'dokter.user', 'details.kodeTindakanTerapi', 'reservasi'])
-                        ->orderBy('created_at', 'desc')
-                        ->get();
+        // Only show RekamMedis where related temu_dokter.status = 'Pending'
+        if (Schema::hasColumn('rekam_medis', 'idreservasi_dokter')) {
+            $rekamMedis = RekamMedis::with(['pet.pemilik.user', 'dokter.user', 'details.kodeTindakanTerapi', 'reservasi'])
+                            ->whereHas('reservasi', function($q){
+                                $q->where('status','Pending');
+                            })
+                            ->orderBy('created_at','desc')
+                            ->get();
+        } else {
+            // Fallback: join via pet -> temu_dokter to find pending appointments
+            $rekamMedis = RekamMedis::with(['pet.pemilik.user', 'dokter.user', 'details.kodeTindakanTerapi', 'reservasi'])
+                            ->join('temu_dokter', 'temu_dokter.idpet', '=', 'rekam_medis.idpet')
+                            ->where('temu_dokter.status','Pending')
+                            ->select('rekam_medis.*')
+                            ->distinct()
+                            ->orderBy('rekam_medis.created_at','desc')
+                            ->get();
+        }
 
         return view('perawat.rekammedis.indexrekam', compact('rekamMedis'));
     }

@@ -34,7 +34,7 @@
                                 <th>Tgl. Periksa</th>
                                 <th>Nama Hewan</th>
                                 <th>Pemilik</th>
-                                <th>Dokter</th>
+                                <!-- Dokter column intentionally removed for Perawat view -->
                                 <th>Diagnosa Singkat</th>
                                 <th>Temuan Klinis</th>
                                 <th>Aksi</th>
@@ -56,15 +56,6 @@
                                 </td>
                                 <td>{{ optional($rm->pet)->nama ?? 'N/A' }}</td>
                                 <td>{{ optional(optional(optional($rm->pet)->pemilik)->user)->nama ?? 'N/A' }}</td>
-                                <td>
-                                    @if(optional(optional($rm->dokter)->user)->nama)
-                                        {{ optional(optional($rm->dokter)->user)->nama }}
-                                    @elseif(optional(optional(optional($rm->reservasi)->dokter)->user)->nama)
-                                        {{ optional(optional(optional($rm->reservasi)->dokter)->user)->nama }}
-                                    @else
-                                        N/A
-                                    @endif
-                                </td>
                                 <td>{{ Str::limit($rm->diagnosa, 40) }}</td>
                                 <td>{{ Str::limit($rm->temuan_klinis, 40) }}</td>
                                 <td>
