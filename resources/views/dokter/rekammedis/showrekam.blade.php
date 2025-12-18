@@ -23,7 +23,7 @@
                 <p><strong>Diagnosa:</strong> {{ $item->diagnosa ?? '-' }}</p>
                 <div class="mb-3">
                     <a href="{{ route('dokter.detail-rekam-medis.create', $item->idrekam_medis) }}" class="btn btn-primary">Tambah Tindakan</a>
-
+                    <a href="{{ route('dokter.rekam-medis.edit', $item->idrekam_medis) }}" class="btn btn-outline-primary ms-2">Edit Rekam Medis</a>
                     <form method="POST" action="{{ route('dokter.rekam-medis.complete', $item->idrekam_medis) }}" class="d-inline-block ms-2">
                         @csrf
                         <button type="submit" class="btn btn-success" onclick="return confirm('Tandai rekam medis ini selesai?')">Selesaikan</button>
